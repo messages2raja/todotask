@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import Todo from './Todo';
+import {useState,useEffect} from 'react';
 
 function App() {
+
+  const [todoList,setTodoList] = useState([]);
+  const getTodoList = async(url) => {
+  fetch('https://dummyjson.com/todos')
+.then(res => res.json())
+.then(result  => setTodoList(result.todos));
+   }
+  useEffect(()=>{
+    const url = "https://dummyjson.com/docs/todos";
+    getTodoList(url);
+  },[])
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Todo todoList={todoList}/>
+    <p>Task Board by Raja Arumugam</p>
     </div>
   );
 }
